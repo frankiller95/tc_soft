@@ -1,4 +1,8 @@
+<? 
 
+if (profile(17,$id_usuario)==1){ 
+
+?>
             <!-- ============================================================== -->
             <!-- Page wrapper  -->
             <!-- ============================================================== -->
@@ -60,7 +64,7 @@
                                                                <td><?=$marca_producto?></td>
                                                                 <td class="jsgrid-cell jsgrid-control-field jsgrid-align-center">
                                                                     <a href="javascript:void(0)" class="btn btn-outline-info waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Editar Marca" onClick="editarMarca(<?= $id_marca ?>)"><i class="mdi mdi-pencil"></i></a>
-                                                                    <a href="javascript:void(0)" class="btn btn-outline-danger waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Eliminar Marca" onClick="eliminarMarca(<?= $id_marca ?>)"><i class="fas fa-cart-arrow-down"></i></a>
+                                                                    <a href="javascript:void(0)" class="btn btn-outline-danger waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Eliminar Marca" onClick="eliminarMarca(<?= $id_marca ?>)"><i class="fas fa-trash-alt"></i></a>
                                                                 </td>
                                                         </tr>
                                                     <?php } ?>
@@ -100,7 +104,7 @@
                                     <div class="form-group">
                                         <label>Marca:<span class="text-danger">&nbsp;*</span></label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="nueva_marca" id="nueva_marca" placeholder="Escribir nueva marca" required autocomplete="ÑÖcompletes">
+                                            <input type="text" class="form-control" name="nueva_marca" id="nueva_marca" placeholder="Escribir nueva marca" required autocomplete="ÑÖcompletes" onkeyup="javascript:this.value=this.value.toUpperCase();" style="text-transform:uppercase;">
                                         </div>
                                     </div>
                                 </div>
@@ -124,11 +128,13 @@
 
 
 function registrarMarcaModal(){
+
     $("#titulo_marcas").html("Ingresar Marca");
     $("#nueva_marca").val('');
     $("#id_marca").val('');
     $("#action_marca").val('insertar');
     $("#registrar-marca-modal").modal("show");
+    
 }
 
 $("#registrarMarcaForm").on("submit", function(e){
@@ -182,11 +188,24 @@ function insertMarcaDB(dates){
                 });
 
                 tablaMarcas.row.add([
-                    respuesta.id_marca, respuesta.marca_producto, `<div class="jsgrid-align-center"><a href="javascript:void(0)" class="btn btn-outline-info waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Editar Producto" onClick="editarMarca(${respuesta.id_marca})"><i class="mdi mdi-pencil"></i></a>
-                        <a href="javascript:void(0)" class="btn btn-outline-danger waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Eliminar Producto" onClick="eliminarMarca(${respuesta.id_marca})"><i class="fas fa-cart-arrow-down"></i></a></div>`
+                    respuesta.id_marca, respuesta.marca, `<div class="jsgrid-align-center"><a href="javascript:void(0)" class="btn btn-outline-info waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Editar Producto" onClick="editarMarca(${respuesta.id_marca})"><i class="mdi mdi-pencil"></i></a>
+                        <a href="javascript:void(0)" class="btn btn-outline-danger waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Eliminar Producto" onClick="eliminarMarca(${respuesta.id_marca})"><i class="fas fa-trash-alt"></i></a></div>`
                 ]).draw(false).nodes().to$().addClass("row-"+respuesta.id_marca);
 
                 $("#registrar-marca-modal").modal("hide");
+
+            }else if(respuesta.response == "existe"){
+
+                Swal.fire({
+
+                        position: 'top-end',
+                        type: 'error',
+                        title: 'Marca ya existe',
+                        showConfirmButton: false,
+                        timer: 3500
+
+                });
+
 
             }else{
 
@@ -218,18 +237,18 @@ function editarMarca(idMarca){
 
     $.ajax({
 
-        data:  parameters,
-        url:   'ajax/marcasAjax.php',
-        type:  'post',
-        success:  function (response) {
+        data: parameters,
+        url: 'ajax/marcasAjax.php',
+        type: 'post',
+        success: function (response) {
             console.log(response);
             const respuesta = JSON.parse(response);
             console.log(respuesta);
 
             $("#titulo_marcas").html("Editar Marca");
-            $("#nueva_marca").val(respuesta[0].marca_producto);
-            $("#id_marca").val(respuesta[0].id);
-            $("#action_marca").val('actualizar_marca');
+            $("#nueva_marca").val(respuesta[0].marca);
+            $("#id_marca").val(respuesta[0].id_marca);
+            $("#action_marca").val('editar');
             $("#registrar-marca-modal").modal("show");
 
         }
@@ -270,11 +289,23 @@ function updateMarcaDB(dates){
                 tablaMarcas.row(".row-"+respuesta.id_marca).remove().draw(false);
 
                 tablaMarcas.row.add([
-                    respuesta.id_marca, respuesta.marca_producto, `<div class="jsgrid-align-center"><a href="javascript:void(0)" class="btn btn-outline-info waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Editar Marca" onClick="editarMarca(${respuesta.id_marca})"><i class="mdi mdi-pencil"></i></a>
-                        <a href="javascript:void(0)" class="btn btn-outline-danger waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Eliminar Marca" onClick="eliminarMarca(${respuesta.id_marca})"><i class="fas fa-cart-arrow-down"></i></a></div>`
+                    respuesta.id_marca, respuesta.marca, `<div class="jsgrid-align-center"><a href="javascript:void(0)" class="btn btn-outline-info waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Editar Producto" onClick="editarMarca(${respuesta.id_marca})"><i class="mdi mdi-pencil"></i></a>
+                        <a href="javascript:void(0)" class="btn btn-outline-danger waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Eliminar Producto" onClick="eliminarMarca(${respuesta.id_marca})"><i class="fas fa-trash-alt"></i></a></div>`
                 ]).draw(false).nodes().to$().addClass("row-"+respuesta.id_marca);
 
                 $("#registrar-marca-modal").modal("hide");
+
+            }else if(respuesta.response == "existe"){
+
+                Swal.fire({
+
+                        position: 'top-end',
+                        type: 'error',
+                        title: 'Marca ya existe',
+                        showConfirmButton: false,
+                        timer: 3500
+
+                });
 
             }else{
 
@@ -315,10 +346,10 @@ function eliminarMarca(idMarca){
             };
 
             $.ajax({
-                data:  parameters,
-                url:   'ajax/marcasAjax.php',
-                type:  'post',
-                success:  function (response) {
+data: parameters,
+url: 'ajax/marcasAjax.php',
+type: 'post',
+success: function (response) {
 
                 console.log(response);
                 const respuesta = JSON.parse(response);
@@ -362,3 +393,12 @@ function eliminarMarca(idMarca){
 }
 
 </script>
+
+<?
+}else{
+
+    include '401error.php';
+
+}
+
+?>

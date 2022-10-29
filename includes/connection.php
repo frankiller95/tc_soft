@@ -4,12 +4,15 @@ $host="127.0.0.1";
 
 $user="root";
 
-$pass="1234";
+$pass="";
 
-$db="tc_soft";
+$db="tucelula_tc_soft_v2";
 
 
-$link=mysqli_connect($host,$user,$pass,$db) or die(mysqli_error());
+
+//echo $pass;
+
+$link=mysqli_connect($host,$user,$pass,$db) or die("Error " . mysqli_error($link));
 
 
 
