@@ -1,0 +1,8 @@
+{
+	"require":{
+		"firebase/php-jwt": "^5.4",
+		"luecano/numero-a-letras": "^3.0",
+		"clegginabox/pdf-merger": "dev-master",
+		"mike42/escpos-php": "*"
+	}
+}

@@ -1,0 +1,15 @@
+[16-Jun-2021 10:42:20 America/Bogota] PHP Parse error:  syntax error, unexpected '}', expecting end of file in /home/u348683366/domains/franseb.com/public_html/tc_soft/header.php on line 309
+[16-Jun-2021 10:42:43 America/Bogota] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home/u348683366/domains/franseb.com/public_html/tc_soft/includes/functions.php:174
+Stack trace:
+#0 /home/u348683366/domains/franseb.com/public_html/tc_soft/header.php(258): profile(1, 20)
+#1 /home/u348683366/domains/franseb.com/public_html/tc_soft/home.php(6): require_once('/home/u34868336...')
+#2 /home/u348683366/domains/franseb.com/public_html/tc_soft/index.php(86): include('/home/u34868336...')
+#3 {main}
+  thrown in /home/u348683366/domains/franseb.com/public_html/tc_soft/includes/functions.php on line 174
+[16-Jun-2021 10:42:55 America/Bogota] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home/u348683366/domains/franseb.com/public_html/tc_soft/includes/functions.php:174
+Stack trace:
+#0 /home/u348683366/domains/franseb.com/public_html/tc_soft/header.php(258): profile(1, 20)
+#1 /home/u348683366/domains/franseb.com/public_html/tc_soft/home.php(6): require_once('/home/u34868336...')
+#2 /home/u348683366/domains/franseb.com/public_html/tc_soft/index.php(86): include('/home/u34868336...')
+#3 {main}
+  thrown in /home/u348683366/domains/franseb.com/public_html/tc_soft/includes/functions.php on line 174
